@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History - MediPredict AI</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-body">
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar glass-panel">
+        <div class="nav-brand">
+            <i class="fa-solid fa-heart-pulse"></i>
+            <span>MediPredict AI</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="/dashboard"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+            <li><a href="/diabetes"><i class="fa-solid fa-syringe"></i> Diabetes</a></li>
+            <li><a href="/history" class="active"><i class="fa-solid fa-clock-rotate-left"></i> History</a></li>
+            <li><a href="/logout" class="btn-logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+        </ul>
+        <div class="hamburger" id="hamburger">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <div class="welcome-section">
+            <h1><i class="fa-solid fa-clock-rotate-left"></i> Prediction History</h1>
+            <p>Track your health predictions and monitor improvements over time.</p>
+        </div>
+
+        <% if (predictions.length === 0) { %>
+            <div class="glass-panel empty-state">
+                <i class="fa-solid fa-file-circle-xmark"></i>
+                <h3>No predictions yet!</h3>
+                <p>Make your first prediction to see your history here.</p>
+                <a href="/diabetes" class="btn-primary">
+                    <i class="fa-solid fa-syringe"></i> Make First Prediction
+                </a>
+            </div>
+        <% } else { %>
+            <div class="history-stats glass-panel">
+                <div class="hstat">
+                    <h3><%= predictions.length %></h3>
+                    <span>Total Predictions</span>
+                </div>
+                <div class="hstat">
+                    <h3><%= predictions.filter(p => p.isDiabetic).length %></h3>
+                    <span>Positive Results</span>
+                </div>
+                <div class="hstat">
+                    <h3><%= predictions.filter(p => !p.isDiabetic).length %></h3>
+                    <span>Negative Results</span>
+                </div>
+            </div>
+
+            <div class="history-table glass-panel">
+                <h2><i class="fa-solid fa-table"></i> All Predictions</h2>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Disease</th>
+                                <th>Result</th>
+                                <th>Probability</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% predictions.forEach((pred, index) => { %>
+                            <tr>
+                                <td><%= index + 1 %></td>
+                                <td>
+                                    <span class="disease-badge">
+                                        <i class="fa-solid fa-syringe"></i> <%= pred.disease %>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="result-badge <%= pred.isDiabetic ? 'badge-positive' : 'badge-negative' %>">
+                                        <i class="fa-solid <%= pred.isDiabetic ? 'fa-triangle-exclamation' : 'fa-circle-check' %>"></i>
+                                        <%= pred.isDiabetic ? 'Positive' : 'Negative' %>
+                                    </span>
+                                </td>
+                                <td><strong><%= pred.probability %></strong></td>
+                                <td><%= new Date(pred.date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) %></td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        <% } %>
+    </div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

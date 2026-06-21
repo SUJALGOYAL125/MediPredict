@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Prediction - MediPredict AI</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-body">
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar glass-panel">
+        <div class="nav-brand">
+            <i class="fa-solid fa-heart-pulse"></i>
+            <span>MediPredict AI</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="/dashboard"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+            <li><a href="/diabetes" class="active"><i class="fa-solid fa-syringe"></i> Diabetes</a></li>
+            <li><a href="/history"><i class="fa-solid fa-clock-rotate-left"></i> History</a></li>
+            <li><a href="/logout" class="btn-logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+        </ul>
+        <div class="hamburger" id="hamburger">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <div class="welcome-section">
+            <h1><i class="fa-solid fa-syringe"></i> Diabetes Prediction</h1>
+            <p>Fill in your health details to get an AI-powered prediction.</p>
+        </div>
+
+        <div class="prediction-layout">
+            <!-- Form -->
+            <div class="glass-panel prediction-form-card">
+                <h2><i class="fa-solid fa-clipboard-list"></i> Health Parameters</h2>
+                <form action="/diabetes/predict" method="POST" id="diabetes-form">
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <label><i class="fa-solid fa-baby"></i> Pregnancies</label>
+                            <input type="number" name="Pregnancies" min="0" max="20" step="1" placeholder="e.g., 2" required>
+                        </div>
+                        <div class="input-group">
+                            <label><i class="fa-solid fa-cubes-stacked"></i> Glucose Level</label>
+                            <input type="number" name="Glucose" min="0" max="300" step="0.1" placeholder="e.g., 120" required>
+                        </div>
+                        <div class="input-group">
+                            <label><i class="fa-solid fa-droplet"></i> Blood Pressure</label>
+                            <input type="number" name="BloodPressure" min="0" max="200" step="0.1" placeholder="e.g., 70" required>
+                        </div>
+                        <div class="input-group">
+                            <label><i class="fa-solid fa-layer-group"></i> Skin Thickness</label>
+                            <input type="number" name="SkinThickness" min="0" max="100" step="0.1" placeholder="e.g., 20" required>
+                        </div>
+                        <div class="input-group">
+                            <label><i class="fa-solid fa-syringe"></i> Insulin Level</label>
+                            <input type="number" name="Insulin" min="0" max="1000" step="0.1" placeholder="e.g., 85" required>
+                        </div>
+                        <div class="input-group">
+                            <label><i class="fa-solid fa-weight-scale"></i> BMI</label>
+                            <input type="number" name="BMI" min="0" max="100" step="0.1" placeholder="e.g., 25.5" required>
+                        </div>
+                        <div class="input-group">
+                            <label><i class="fa-solid fa-dna"></i> Diabetes Pedigree</label>
+                            <input type="number" name="DiabetesPedigreeFunction" min="0" max="3" step="0.001" placeholder="e.g., 0.5" required>
+                        </div>
+                        <div class="input-group">
+                            <label><i class="fa-solid fa-calendar-days"></i> Age</label>
+                            <input type="number" name="Age" min="1" max="120" step="1" placeholder="e.g., 33" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary">
+                        <i class="fa-solid fa-brain"></i> Predict Now
+                    </button>
+                </form>
+            </div>
+
+            <!-- Result -->
+            <% if (result) { %>
+            <div class="glass-panel result-card">
+                <% if (result.error) { %>
+                    <div class="alert alert-error">
+                        <i class="fa-solid fa-circle-exclamation"></i> <%= result.error %>
+                    </div>
+                <% } else { %>
+                    <h2><i class="fa-solid fa-chart-pie"></i> Prediction Result</h2>
+                    <div class="result-content <%= result.is_diabetic ? 'result-positive' : 'result-negative' %>">
+                        <div class="result-icon">
+                            <i class="fa-solid <%= result.is_diabetic ? 'fa-triangle-exclamation' : 'fa-circle-check' %>"></i>
+                        </div>
+                        <h3><%= result.prediction %></h3>
+                        <div class="probability-display">
+                            <span>Risk Probability</span>
+                            <strong><%= result.probability %></strong>
+                        </div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" style="width: <%= result.probability %>; background: <%= result.is_diabetic ? 'linear-gradient(90deg, #ff416c, #ff4b2b)' : 'linear-gradient(90deg, #11998e, #38ef7d)' %>"></div>
+                        </div>
+                        <p class="result-note">
+                            <i class="fa-solid fa-circle-info"></i>
+                            This prediction has been saved to your history.
+                        </p>
+                        <a href="/history" class="btn-secondary">
+                            <i class="fa-solid fa-clock-rotate-left"></i> View History
+                        </a>
+                    </div>
+                <% } %>
+            </div>
+            <% } %>
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

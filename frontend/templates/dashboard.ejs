@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - MediPredict AI</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-body">
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar glass-panel">
+        <div class="nav-brand">
+            <i class="fa-solid fa-heart-pulse"></i>
+            <span>MediPredict AI</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="/dashboard" class="active"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+            <li><a href="/diabetes"><i class="fa-solid fa-syringe"></i> Diabetes</a></li>
+            <li><a href="/history"><i class="fa-solid fa-clock-rotate-left"></i> History</a></li>
+            <li><a href="/logout" class="btn-logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+        </ul>
+        <div class="hamburger" id="hamburger">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="dashboard-container">
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <h1>Welcome back, <span class="highlight"><%= userName %>!</span> 👋</h1>
+            <p>Your personal AI-powered health prediction dashboard.</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card glass-panel">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>AI Models</h3>
+                    <p class="stat-number">1</p>
+                    <span>Available</span>
+                </div>
+            </div>
+
+            <div class="stat-card glass-panel">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Predictions</h3>
+                    <p class="stat-number">∞</p>
+                    <span>Available</span>
+                </div>
+            </div>
+
+            <div class="stat-card glass-panel">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">
+                    <i class="fa-solid fa-shield-heart"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Accuracy</h3>
+                    <p class="stat-number">76%</p>
+                    <span>Model Score</span>
+                </div>
+            </div>
+
+            <div class="stat-card glass-panel">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #43e97b, #38f9d7);">
+                    <i class="fa-solid fa-database"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Data Saved</h3>
+                    <p class="stat-number">✅</p>
+                    <span>Secure</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Disease Cards -->
+        <div class="section-header">
+            <h2>🧬 Available Predictions</h2>
+            <p>Select a disease to get your AI-powered prediction</p>
+        </div>
+
+        <div class="disease-grid">
+            <!-- Diabetes Card -->
+            <div class="disease-card glass-panel">
+                <div class="disease-icon" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
+                    <i class="fa-solid fa-syringe"></i>
+                </div>
+                <div class="disease-info">
+                    <h3>Diabetes Prediction</h3>
+                    <p>XGBoost ML Model trained on Pima Indians dataset with 76% accuracy.</p>
+                    <div class="disease-tags">
+                        <span class="tag">XGBoost</span>
+                        <span class="tag">76% Accuracy</span>
+                        <span class="tag">8 Features</span>
+                    </div>
+                </div>
+                <a href="/diabetes" class="btn-predict-card">
+                    Predict Now <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Coming Soon Cards -->
+            <div class="disease-card glass-panel coming-soon">
+                <div class="disease-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+                <div class="disease-info">
+                    <h3>Heart Disease</h3>
+                    <p>Predict risk of heart disease based on health parameters.</p>
+                    <div class="disease-tags">
+                        <span class="tag coming">Coming Soon</span>
+                    </div>
+                </div>
+                <button class="btn-predict-card disabled" disabled>
+                    Coming Soon <i class="fa-solid fa-clock"></i>
+                </button>
+            </div>
+
+            <div class="disease-card glass-panel coming-soon">
+                <div class="disease-icon" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">
+                    <i class="fa-solid fa-lungs"></i>
+                </div>
+                <div class="disease-info">
+                    <h3>Kidney Disease</h3>
+                    <p>Early detection of chronic kidney disease using ML.</p>
+                    <div class="disease-tags">
+                        <span class="tag coming">Coming Soon</span>
+                    </div>
+                </div>
+                <button class="btn-predict-card disabled" disabled>
+                    Coming Soon <i class="fa-solid fa-clock"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="quick-links glass-panel">
+            <h3><i class="fa-solid fa-bolt"></i> Quick Actions</h3>
+            <div class="quick-grid">
+                <a href="/diabetes" class="quick-btn">
+                    <i class="fa-solid fa-syringe"></i>
+                    <span>New Prediction</span>
+                </a>
+                <a href="/history" class="quick-btn">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>View History</span>
+                </a>
+                <a href="/logout" class="quick-btn danger">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>
