@@ -60,7 +60,7 @@ def predict():
         return jsonify({'error': str(e), 'success': False}), 500
     
 #heart disease prediction endpoint
-@app.route('/predict_heart',methods=['POST'])
+@app.route('/predict/heart',methods=['POST'])
 def predict_heart():
     if heart_model is None or heart_scaler is None:
         return jsonify({'error':'Heart model not loaded'}), 500
