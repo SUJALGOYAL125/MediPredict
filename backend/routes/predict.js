@@ -3,13 +3,16 @@ const router = express.Router();
 const axios = require('axios');
 const Prediction = require('../models/Prediction');
 
-// Middleware to check if logged in
+// ============ CONFIG ============
+const FLASK_URL = process.env.FLASK_URL || 'http://localhost:5001';
+
+// ============ MIDDLEWARE ============
 const isAuth = (req, res, next) => {
     if (!req.session.userId) return res.redirect('/login');
     next();
 };
 
-// GET Diabetes Prediction Page
+// GET Diabetes Page
 router.get('/diabetes', isAuth, (req, res) => {
     res.render('diabetes', { userName: req.session.userName, result: null });
 });
@@ -28,15 +31,14 @@ router.post('/diabetes/predict', isAuth, async (req, res) => {
             Age: parseFloat(req.body.Age)
         };
 
-        // Call Flask ML service
-        const flaskResponse = await axios.post('http://localhost:5001/predict', inputData, {
+        // ✅ Updated Flask URL
+        const flaskResponse = await axios.post(`${FLASK_URL}/predict`, inputData, {
             headers: { 'Content-Type': 'application/json' }
         });
 
         const { prediction, probability, is_diabetic } = flaskResponse.data;
 
-        // Save prediction to MongoDB
-        const newPrediction = new Prediction({
+        await Prediction.create({
             userId: req.session.userId,
             disease: 'Diabetes',
             inputs: inputData,
@@ -44,15 +46,10 @@ router.post('/diabetes/predict', isAuth, async (req, res) => {
             probability: probability,
             isDiabetic: is_diabetic
         });
-        await newPrediction.save();
 
         res.render('diabetes', {
             userName: req.session.userName,
-            result: {
-                prediction,
-                probability,
-                is_diabetic
-            }
+            result: { prediction, probability, is_diabetic }
         });
 
     } catch (error) {
