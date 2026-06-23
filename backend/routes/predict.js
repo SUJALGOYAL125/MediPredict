@@ -64,56 +64,57 @@ router.post('/diabetes/predict', isAuth, async (req, res) => {
 });
 
 // heart disease prediction route
-router.get('/heart',isAuth,(req,res)=>{
-    res.render('heart',{username:req.session.username,result:null})
+router.get('/heart', isAuth, (req, res) => {
+    res.render('heart', { userName: req.session.userName, result: null })
 })
 
-router.post('/heart/predict',isAuth,async(req,res)=>{
-    try{
+router.post('/heart/predict', isAuth, async (req, res) => {
+    try {
         const inputData = {
-            age:parseFloat(req.body.age),
-            sex:parseFloat(req.body.sex),
-            cp:parseFloat(req.body.cp),
-            trestbps:parseFloat(req.body.trestbps),
-            chol:parseFloat(req.body.chol),
-            fbs:parseFloat(req.body.fbs),
-            restecg:parseFloat(req.body.restecg),
-            thalach:parseFloat(req.body.thalach),
-            exang:parseFloat(req.body.exang),
-            oldpeak:parseFloat(req.body.oldpeak),
-            slope:parseFloat(req.body.slope),
-            ca:parseFloat(req.body.ca),
-            thal:parseFloat(req.body.thal)
+            age: parseFloat(req.body.age),
+            sex: parseFloat(req.body.sex),
+            cp: parseFloat(req.body.cp),
+            trestbps: parseFloat(req.body.trestbps),
+            chol: parseFloat(req.body.chol),
+            fbs: parseFloat(req.body.fbs),
+            restecg: parseFloat(req.body.restecg),
+            thalach: parseFloat(req.body.thalach),
+            exang: parseFloat(req.body.exang),
+            oldpeak: parseFloat(req.body.oldpeak),
+            slope: parseFloat(req.body.slope),
+            ca: parseFloat(req.body.ca),
+            thal: parseFloat(req.body.thal)
         }
 
-        const flaskResponse = await axios.post(`${FLASK_URL}/predict/heart`,inputData,{
-            headers:{'Content-Type':'application/json'},
-            timeout:5000
+        const flaskResponse = await axios.post(`${FLASK_URL}/predict/heart`, inputData, {
+            headers: { 'Content-Type': 'application/json' },
+            timeout: 30000
         })
 
-        const {prediction,probability,is_heart_disease} = flaskResponse.data
+        // ✅ Fixed variable name
+        const { prediction, probability, is_positive } = flaskResponse.data
 
         await Prediction.create({
-            userId:req.session.userId,
-            disease:'Heart Disease',
-            inputs:inputData,
-            result:prediction,
-            probability:probability,
-            isDiabetic:is_positive
+            userId: req.session.userId,
+            disease: 'Heart Disease',
+            inputs: inputData,
+            result: prediction,
+            probability: probability,
+            isDiabetic: is_positive  // ✅ Fixed
         })
 
-        res.render('heart',{
-            username:req.session.username,
-            result:{prediction,probability,is_positivedone}
+        res.render('heart', {
+            userName: req.session.userName,  // ✅ Fixed
+            result: { prediction, probability, is_positive }  // ✅ Fixed
         })
 
-    }catch(error){
-        console.error('Heart Prediction error:',error.message)
-        console.error('Flask URL:',FLASK_URL)
-        console.error('Full error:',error.response?.data)
-        res.render('heart',{
-            username:req.session.username,
-            result:{error:'Prediction failed. Make sure ML service is running.'}
+    } catch (error) {
+        console.error('Heart Prediction error:', error.message)
+        console.error('Flask URL:', FLASK_URL)
+        console.error('Full error:', error.response?.data)
+        res.render('heart', {
+            userName: req.session.userName,  // ✅ Fixed
+            result: { error: 'Prediction failed. Make sure ML service is running.' }
         })
     }
 })
