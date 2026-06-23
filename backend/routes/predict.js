@@ -86,7 +86,7 @@ router.post('/heart/predict',isAuth,async(req,res)=>{
             thal:parseFloat(req.body.thal)
         }
 
-        const flaskResponse = await axios.post(`${FLASK_URL}/heart/predict`,inputData,{
+        const flaskResponse = await axios.post(`${FLASK_URL}/predict/heart`,inputData,{
             headers:{'Content-Type':'application/json'},
             timeout:5000
         })
