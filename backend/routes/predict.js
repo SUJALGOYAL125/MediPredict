@@ -53,12 +53,14 @@ router.post('/diabetes/predict', isAuth, async (req, res) => {
         });
 
     } catch (error) {
-        console.error('Prediction error:', error.message);
-        res.render('diabetes', {
-            userName: req.session.userName,
-            result: { error: 'Prediction failed. Make sure ML service is running.' }
-        });
-    }
+    console.error('Prediction error:', error.message);
+    console.error('Flask URL:', FLASK_URL);
+    console.error('Full error:', error.response?.data);
+    res.render('diabetes', {
+        userName: req.session.userName,
+        result: { error: 'Prediction failed. Make sure ML service is running.' }
+    });
+}
 });
 
 // GET History Page
