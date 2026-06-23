@@ -1,12 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include('partials/head') %>
     <title>Heart Disease Prediction | MediPred</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="background-shapes">
@@ -16,22 +12,7 @@
     </div>
 
     <!-- Navbar -->
-    <nav class="navbar glass-panel">
-        <div class="nav-brand">
-            <i class="fa-solid fa-heart-pulse"></i>
-            MediPred
-        </div>
-        <ul class="nav-links">
-            <li><a href="/dashboard"><i class="fa-solid fa-house"></i> Dashboard</a></li>
-            <li><a href="/diabetes"><i class="fa-solid fa-droplet"></i> Diabetes</a></li>
-            <li><a href="/heart" class="active"><i class="fa-solid fa-heart"></i> Heart</a></li>
-            <li><a href="/history"><i class="fa-solid fa-clock-rotate-left"></i> History</a></li>
-            <li><a href="/logout" class="btn-logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
-        </ul>
-        <div class="hamburger" id="hamburger">
-            <i class="fa-solid fa-bars"></i>
-        </div>
-    </nav>
+    <%- include('partials/navbar') %>
 
     <!-- Main Content -->
     <div class="dashboard-container">
@@ -133,7 +114,7 @@
                 <% } else { %>
                 <div class="result-content <%= result.is_positive ? 'result-positive' : 'result-negative' %>">
                     <div class="result-icon">
-                        <% if (result.is_positive) { %>
+                        <% if (result && result.is_positive) { %>
                             <i class="fa-solid fa-heart-crack"></i>
                         <% } else { %>
                             <i class="fa-solid fa-heart"></i>
@@ -149,7 +130,7 @@
 
                     <div class="progress-bar-bg">
                         <div class="progress-bar-fill"
-                            style="width: <%= result.probability %>;
+                            style="width: <%= result.probability || '0%' %>;
                             background: <%= result.is_positive ? 'linear-gradient(90deg, #ff416c, #ff4b2b)' : 'linear-gradient(90deg, #11998e, #38ef7d)' %>">
                         </div>
                     </div>
