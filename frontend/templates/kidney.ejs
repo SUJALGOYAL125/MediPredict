@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/head') %>
+    <title>Kidney Disease Prediction | MediPred</title>
+</head>
+<body>
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <!-- Navbar -->
+    <%- include('partials/navbar') %>
+
+    <!-- Main Content -->
+    <div class="dashboard-container">
+        <div class="welcome-section">
+            <h1>🫘 Kidney Disease <span class="highlight">Prediction</span></h1>
+            <p>Enter your blood and urine test parameters to predict kidney disease</p>
+        </div>
+
+        <div class="prediction-layout">
+            <!-- Form -->
+            <div class="prediction-form-card glass-panel">
+                <h2><i class="fa-solid fa-clipboard-list"></i> Enter Test Parameters</h2>
+                <form action="/kidney/predict" method="POST">
+                    <div class="form-grid">
+
+                        <div class="input-group">
+                            <label>Age</label>
+                            <input type="number" name="age" placeholder="e.g. 45" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Blood Pressure (bp)</label>
+                            <input type="number" name="bp" placeholder="e.g. 80" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Specific Gravity (sg)</label>
+                            <input type="number" step="0.001" name="sg" placeholder="e.g. 1.020" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Albumin (al) 0-5</label>
+                            <input type="number" name="al" placeholder="0 to 5" min="0" max="5" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Sugar (su) 0-5</label>
+                            <input type="number" name="su" placeholder="0 to 5" min="0" max="5" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Red Blood Cells (rbc) 0=abnormal 1=normal</label>
+                            <input type="number" name="rbc" placeholder="0 or 1" min="0" max="1" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Pus Cell (pc) 0=abnormal 1=normal</label>
+                            <input type="number" name="pc" placeholder="0 or 1" min="0" max="1" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Pus Cell Clumps (pcc) 0=notpresent 1=present</label>
+                            <input type="number" name="pcc" placeholder="0 or 1" min="0" max="1" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Bacteria (ba) 0=notpresent 1=present</label>
+                            <input type="number" name="ba" placeholder="0 or 1" min="0" max="1" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Blood Glucose Random (bgr)</label>
+                            <input type="number" name="bgr" placeholder="e.g. 120" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Blood Urea (bu)</label>
+                            <input type="number" name="bu" placeholder="e.g. 40" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Serum Creatinine (sc)</label>
+                            <input type="number" step="0.1" name="sc" placeholder="e.g. 1.2" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Sodium (sod)</label>
+                            <input type="number" name="sod" placeholder="e.g. 135" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Potassium (pot)</label>
+                            <input type="number" step="0.1" name="pot" placeholder="e.g. 4.5" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Hemoglobin (hemo)</label>
+                            <input type="number" step="0.1" name="hemo" placeholder="e.g. 13.5" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Packed Cell Volume (pcv)</label>
+                            <input type="number" name="pcv" placeholder="e.g. 40" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>White Blood Cell Count (wc)</label>
+                            <input type="number" name="wc" placeholder="e.g. 7500" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Red Blood Cell Count (rc)</label>
+                            <input type="number" step="0.1" name="rc" placeholder="e.g. 4.5" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Hypertension (htn) 0=no 1=yes</label>
+                            <input type="number" name="htn" placeholder="0 or 1" min="0" max="1" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Diabetes Mellitus (dm) 0=no 1=yes</label>
+                            <input type="number" name="dm" placeholder="0 or 1" min="0" max="1" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Coronary Artery Disease (cad) 0=no 1=yes</label>
+                            <input type="number" name="cad" placeholder="0 or 1" min="0" max="1" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Appetite (appet) 0=poor 1=good</label>
+                            <input type="number" name="appet" placeholder="0 or 1" min="0" max="1" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Pedal Edema (pe) 0=no 1=yes</label>
+                            <input type="number" name="pe" placeholder="0 or 1" min="0" max="1" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Anemia (ane) 0=no 1=yes</label>
+                            <input type="number" name="ane" placeholder="0 or 1" min="0" max="1" required />
+                        </div>
+
+                    </div>
+                    <button type="submit" class="btn-primary">
+                        <i class="fa-solid fa-kidneys"></i> Predict Kidney Disease
+                    </button>
+                </form>
+            </div>
+
+            <!-- Result -->
+            <% if (result) { %>
+            <div class="result-card glass-panel">
+                <h2><i class="fa-solid fa-chart-simple"></i> Prediction Result</h2>
+
+                <% if (result.error) { %>
+                <div class="alert alert-error">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <%= result.error %>
+                </div>
+
+                <% } else { %>
+                <div class="result-content <%= result.is_positive ? 'result-positive' : 'result-negative' %>">
+                    <div class="result-icon">
+                        <% if (result.is_positive) { %>
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        <% } else { %>
+                            <i class="fa-solid fa-circle-check"></i>
+                        <% } %>
+                    </div>
+
+                    <h3><%= result.prediction %></h3>
+
+                    <div class="probability-display">
+                        <span>Risk Probability</span>
+                        <strong><%= result.probability %></strong>
+                    </div>
+
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill"
+                            style="width: <%= result.probability || '0%' %>;
+                            background: <%= result.is_positive ? 'linear-gradient(90deg, #ff416c, #ff4b2b)' : 'linear-gradient(90deg, #11998e, #38ef7d)' %>">
+                        </div>
+                    </div>
+
+                    <p class="result-note">
+                        <i class="fa-solid fa-circle-info"></i>
+                        This is an AI prediction. Please consult a doctor for proper diagnosis.
+                    </p>
+                </div>
+                <% } %>
+            </div>
+            <% } %>
+
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

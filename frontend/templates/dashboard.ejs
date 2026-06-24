@@ -21,49 +21,50 @@
             <p>Your personal AI-powered health prediction dashboard.</p>
         </div>
 
-        <!-- Stats Cards -->
+        
+        <!-- Stats -->
         <div class="stats-grid">
             <div class="stat-card glass-panel">
-                <div class="stat-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #4e54c8, #8f94fb);">
                     <i class="fa-solid fa-brain"></i>
                 </div>
                 <div class="stat-info">
-                    <h3>AI Models</h3>
-                    <p class="stat-number">2</p>
-                    <span>Available</span>
+                    <h3>Total Models</h3>
+                    <div class="stat-number">4</div>
+                    <span>ML & DL Models</span>
                 </div>
             </div>
 
             <div class="stat-card glass-panel">
-                <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
-                    <i class="fa-solid fa-chart-line"></i>
+                <div class="stat-icon" style="background: linear-gradient(135deg, #11998e, #38ef7d);">
+                    <i class="fa-solid fa-bullseye"></i>
                 </div>
                 <div class="stat-info">
-                    <h3>Predictions</h3>
-                    <p class="stat-number">∞</p>
-                    <span>Available</span>
+                    <h3>Best Accuracy</h3>
+                    <div class="stat-number">97%</div>
+                    <span>Kidney Disease</span>
                 </div>
             </div>
 
             <div class="stat-card glass-panel">
-                <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #f953c6, #b91d73);">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Diseases</h3>
+                    <div class="stat-number">4</div>
+                    <span>Covered</span>
+                </div>
+            </div>
+
+            <div class="stat-card glass-panel">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #ff416c, #ff4b2b);">
                     <i class="fa-solid fa-shield-heart"></i>
                 </div>
                 <div class="stat-info">
-                    <h3>Accuracy</h3>
-                    <p class="stat-number">76%</p>
-                    <span>Model Score</span>
-                </div>
-            </div>
-
-            <div class="stat-card glass-panel">
-                <div class="stat-icon" style="background: linear-gradient(135deg, #43e97b, #38f9d7);">
-                    <i class="fa-solid fa-database"></i>
-                </div>
-                <div class="stat-info">
-                    <h3>Data Saved</h3>
-                    <p class="stat-number">✅</p>
-                    <span>Secure</span>
+                    <h3>Avg Accuracy</h3>
+                    <div class="stat-number">90%</div>
+                    <span>Across Models</span>
                 </div>
             </div>
         </div>
@@ -94,7 +95,7 @@
                 </a>
             </div>
 
-            <!-- Add this card after Diabetes card -->
+            <!-- heart disease card -->
             <div class="disease-card glass-panel">
                 <div class="disease-icon" style="background: linear-gradient(135deg, #ff416c, #ff4b2b);">
                     <i class="fa-solid fa-heart"></i>
@@ -105,6 +106,7 @@
                     <div class="disease-tags">
                         <span class="tag">Random Forest</span>
                         <span class="tag">85% Accuracy</span>
+                        <span class="tag">13 Features</span>
                     </div>
                 </div>
                 <a href="/heart" class="btn-predict-card">
@@ -112,23 +114,66 @@
                 </a>
             </div>
 
-            <!-- Coming Soon Cards -->
-            <div class="disease-card glass-panel coming-soon">
-                <div class="disease-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">
-                    <i class="fa-solid fa-heart"></i>
+
+            <!-- kidney disease card -->
+            <div class="disease-card glass-panel">
+                <div class="disease-icon" style="background: linear-gradient(135deg, #8e2de2, #4a00e0);">
+                    <i class="fa-solid fa-kidneys"></i>
                 </div>
                 <div class="disease-info">
-                    <h3>Heart Disease</h3>
-                    <p>Predict risk of heart disease based on health parameters.</p>
+                    <h3>Kidney Disease</h3>
+                    <p>Detect chronic kidney disease using blood and urine test parameters</p>
                     <div class="disease-tags">
-                        <span class="tag coming">Coming Soon</span>
+                        <span class="tag">KNN</span>
+                        <span class="tag">97.5% Accuracy</span>
+                        <span class="tag">26 Features</span>
                     </div>
                 </div>
-                <button class="btn-predict-card disabled" disabled>
-                    Coming Soon <i class="fa-solid fa-clock"></i>
-                </button>
+                <a href="/kidney" class="btn-predict-card">
+                    <i class="fa-solid fa-kidneys"></i> Predict Now
+                </a>
             </div>
 
+            <!-- Breast cancer disease card -->
+            <div class="disease-card glass-panel">
+                <div class="disease-icon" style="background: linear-gradient(135deg, #f953c6, #b91d73);">
+                    <i class="fa-solid fa-ribbon"></i>
+                </div>
+                <div class="disease-info">
+                    <h3>Breast Cancer Disease</h3>
+                    <p>Detect breast cancer as malignant or benign using cell nucleus measurements</p>
+                    <div class="disease-tags">
+                        <span class="tag">SVM</span>
+                        <span class="tag">97% Accuracy</span>
+                        <span class="tag">30 Features</span>
+                    </div>
+                </div>
+                <a href="/cancer" class="btn-predict-card">
+                    <i class="fa-solid fa-ribbon"></i> Predict Now
+                </a>
+            </div>
+
+            <!-- Pneumonia detection card -->
+            <div class="disease-card glass-panel">
+                <div class="disease-icon" style="background: linear-gradient(135deg, #4e54c8, #8f94fb);">
+                    <i class="fa-solid fa-lungs"></i>
+                </div>
+                <div class="disease-info">
+                    <h3>Pneumonia Detection</h3>
+                    <p>Detect pneumonia from chest X-ray images using Deep Learning CNN</p>
+                    <div class="disease-tags">
+                        <span class="tag">CNN</span>
+                        <span class="tag">Deep Learning</span>
+                        <span class="tag">84% Accuracy</span>
+                    </div>
+                </div>
+                <a href="/pneumonia" class="btn-predict-card">
+                    <i class="fa-solid fa-lungs"></i> Predict Now
+                </a>
+            </div>
+            
+
+            <!-- Coming Soon Cards -->
             <div class="disease-card glass-panel coming-soon">
                 <div class="disease-icon" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">
                     <i class="fa-solid fa-lungs"></i>

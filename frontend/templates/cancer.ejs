@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/head') %>
+    <title>Breast Cancer Prediction | MediPred</title>
+    
+</head>
+<body>
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <!-- Navbar -->
+    <%- include('partials/navbar') %>
+
+    <!-- Main Content -->
+    <div class="dashboard-container">
+        <div class="welcome-section">
+            <h1>🎗️ Breast Cancer <span class="highlight">Prediction</span></h1>
+            <p>Enter cell nucleus measurements to detect breast cancer</p>
+        </div>
+
+        <div class="prediction-layout">
+            <!-- Form -->
+            <div class="prediction-form-card glass-panel">
+                <h2><i class="fa-solid fa-clipboard-list"></i> Enter Cell Measurements</h2>
+                <form action="/cancer/predict" method="POST">
+                    <div class="form-grid">
+
+                        <div class="input-group">
+                            <label>Mean Radius</label>
+                            <input type="number" step="0.001" name="mean_radius" placeholder="e.g. 14.5" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Mean Texture</label>
+                            <input type="number" step="0.001" name="mean_texture" placeholder="e.g. 19.2" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Mean Perimeter</label>
+                            <input type="number" step="0.001" name="mean_perimeter" placeholder="e.g. 92.5" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Mean Area</label>
+                            <input type="number" step="0.001" name="mean_area" placeholder="e.g. 654.8" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Mean Smoothness</label>
+                            <input type="number" step="0.0001" name="mean_smoothness" placeholder="e.g. 0.0987" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Mean Compactness</label>
+                            <input type="number" step="0.0001" name="mean_compactness" placeholder="e.g. 0.1234" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Mean Concavity</label>
+                            <input type="number" step="0.0001" name="mean_concavity" placeholder="e.g. 0.0987" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Mean Concave Points</label>
+                            <input type="number" step="0.0001" name="mean_concave_points" placeholder="e.g. 0.0567" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Mean Symmetry</label>
+                            <input type="number" step="0.0001" name="mean_symmetry" placeholder="e.g. 0.1876" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Mean Fractal Dimension</label>
+                            <input type="number" step="0.0001" name="mean_fractal_dimension" placeholder="e.g. 0.0621" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Radius Error</label>
+                            <input type="number" step="0.0001" name="radius_error" placeholder="e.g. 0.456" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Texture Error</label>
+                            <input type="number" step="0.0001" name="texture_error" placeholder="e.g. 1.234" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Perimeter Error</label>
+                            <input type="number" step="0.0001" name="perimeter_error" placeholder="e.g. 3.456" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Area Error</label>
+                            <input type="number" step="0.0001" name="area_error" placeholder="e.g. 34.56" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Smoothness Error</label>
+                            <input type="number" step="0.00001" name="smoothness_error" placeholder="e.g. 0.00567" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Compactness Error</label>
+                            <input type="number" step="0.00001" name="compactness_error" placeholder="e.g. 0.02345" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Concavity Error</label>
+                            <input type="number" step="0.00001" name="concavity_error" placeholder="e.g. 0.03456" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Concave Points Error</label>
+                            <input type="number" step="0.00001" name="concave_points_error" placeholder="e.g. 0.01234" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Symmetry Error</label>
+                            <input type="number" step="0.00001" name="symmetry_error" placeholder="e.g. 0.02345" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Fractal Dimension Error</label>
+                            <input type="number" step="0.00001" name="fractal_dimension_error" placeholder="e.g. 0.00345" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Worst Radius</label>
+                            <input type="number" step="0.001" name="worst_radius" placeholder="e.g. 17.8" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Worst Texture</label>
+                            <input type="number" step="0.001" name="worst_texture" placeholder="e.g. 25.6" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Worst Perimeter</label>
+                            <input type="number" step="0.001" name="worst_perimeter" placeholder="e.g. 115.6" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Worst Area</label>
+                            <input type="number" step="0.001" name="worst_area" placeholder="e.g. 987.6" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Worst Smoothness</label>
+                            <input type="number" step="0.0001" name="worst_smoothness" placeholder="e.g. 0.1456" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Worst Compactness</label>
+                            <input type="number" step="0.0001" name="worst_compactness" placeholder="e.g. 0.2345" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Worst Concavity</label>
+                            <input type="number" step="0.0001" name="worst_concavity" placeholder="e.g. 0.3456" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Worst Concave Points</label>
+                            <input type="number" step="0.0001" name="worst_concave_points" placeholder="e.g. 0.1234" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Worst Symmetry</label>
+                            <input type="number" step="0.0001" name="worst_symmetry" placeholder="e.g. 0.2987" required />
+                        </div>
+
+                        <div class="input-group">
+                            <label>Worst Fractal Dimension</label>
+                            <input type="number" step="0.00001" name="worst_fractal_dimension" placeholder="e.g. 0.08765" required />
+                        </div>
+
+                    </div>
+                    <button type="submit" class="btn-primary">
+                        <i class="fa-solid fa-ribbon"></i> Predict Cancer
+                    </button>
+                </form>
+            </div>
+
+            <!-- Result -->
+            <% if (result) { %>
+            <div class="result-card glass-panel">
+                <h2><i class="fa-solid fa-chart-simple"></i> Prediction Result</h2>
+
+                <% if (result.error) { %>
+                <div class="alert alert-error">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <%= result.error %>
+                </div>
+
+                <% } else { %>
+                <div class="result-content <%= result.is_positive ? 'result-positive' : 'result-negative' %>">
+                    <div class="result-icon">
+                        <% if (result.is_positive) { %>
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        <% } else { %>
+                            <i class="fa-solid fa-circle-check"></i>
+                        <% } %>
+                    </div>
+
+                    <h3><%= result.prediction %></h3>
+
+                    <div class="probability-display">
+                        <span>Risk Probability</span>
+                        <strong><%= result.probability %></strong>
+                    </div>
+
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill"
+                            style="width: <%= result.probability || '0%' %>;
+                            background: <%= result.is_positive ? 'linear-gradient(90deg, #ff416c, #ff4b2b)' : 'linear-gradient(90deg, #11998e, #38ef7d)' %>">
+                        </div>
+                    </div>
+
+                    <p class="result-note">
+                        <i class="fa-solid fa-circle-info"></i>
+                        This is an AI prediction. Please consult a doctor for proper diagnosis.
+                    </p>
+                </div>
+                <% } %>
+            </div>
+            <% } %>
+
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>
