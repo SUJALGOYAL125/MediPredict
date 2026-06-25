@@ -276,7 +276,6 @@ router.post('/pneumonia/predict', isAuth, async (req, res) => {
             isDiabetic: is_positive
         });
 
-        // ✅ Return JSON instead of render
         res.json({
             success: true,
             prediction,

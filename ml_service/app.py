@@ -43,21 +43,17 @@ except Exception as e:
     cancer_model, cancer_scaler = None, None
 
 # ============ LOAD PNEUMONIA MODEL ============
-import tensorflow as tf
-import numpy as np
+import onnxruntime as ort
 from PIL import Image
 import base64
 import io
 
 try:
-    interpreter = tf.lite.Interpreter(model_path='models/pneumonia_model.tflite')
-    interpreter.allocate_tensors()
-    input_details = interpreter.get_input_details()
-    output_details = interpreter.get_output_details()
+    pneumonia_session = ort.InferenceSession('models/pneumonia_model.onnx')
     print("✅ Pneumonia model loaded successfully.")
 except Exception as e:
     print(f"❌ Error loading pneumonia model: {e}")
-    interpreter = None
+    pneumonia_session = None
 
 # ============ HEALTH CHECK ============
 @app.route('/health', methods=['GET'])
@@ -188,7 +184,7 @@ def predict_cancer():
 # ============ PNEUMONIA PREDICTION ============
 @app.route('/predict/pneumonia', methods=['POST'])
 def predict_pneumonia():
-    if interpreter is None:
+    if pneumonia_session is None:
         return jsonify({'error': 'Pneumonia model not loaded'}), 500
     try:
         data = request.json
@@ -198,10 +194,9 @@ def predict_pneumonia():
         img_array = np.array(image, dtype=np.float32) / 255.0
         img_array = np.expand_dims(img_array, axis=0)
 
-        interpreter.set_tensor(input_details[0]['index'], img_array)
-        interpreter.invoke()
-        output = interpreter.get_tensor(output_details[0]['index'])
-        probability = float(output[0][0]) * 100
+        input_name = pneumonia_session.get_inputs()[0].name
+        output = pneumonia_session.run(None, {input_name: img_array})
+        probability = float(output[0][0][0]) * 100
         is_positive = probability > 50
 
         result = "Pneumonia Detected" if is_positive else "Normal - No Pneumonia"
@@ -213,6 +208,7 @@ def predict_pneumonia():
             'is_positive': is_positive
         })
     except Exception as e:
+        print(f"❌ Pneumonia error: {e}")
         return jsonify({'error': str(e), 'success': False}), 500
 
 
