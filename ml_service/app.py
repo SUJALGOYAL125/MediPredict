@@ -42,6 +42,23 @@ except Exception as e:
     print(f"❌ Error loading cancer model: {e}")
     cancer_model, cancer_scaler = None, None
 
+# ============ LOAD PNEUMONIA MODEL ============
+import tensorflow as tf
+import numpy as np
+from PIL import Image
+import base64
+import io
+
+try:
+    interpreter = tf.lite.Interpreter(model_path='models/pneumonia_model.tflite')
+    interpreter.allocate_tensors()
+    input_details = interpreter.get_input_details()
+    output_details = interpreter.get_output_details()
+    print("✅ Pneumonia model loaded successfully.")
+except Exception as e:
+    print(f"❌ Error loading pneumonia model: {e}")
+    interpreter = None
+
 # ============ HEALTH CHECK ============
 @app.route('/health', methods=['GET'])
 def health():
@@ -103,23 +120,35 @@ def predict_kidney():
         return jsonify({'error': 'Kidney model not loaded'}), 500
     try:
         data = request.json
+        print(f"Received data: {data}")  # ✅ Add this
+        
         features = ['age', 'bp', 'sg', 'al', 'su', 'rbc', 'pc',
-                    'pcc', 'ba', 'bgr', 'bu', 'sc', 'sod', 'pot',
-                    'hemo', 'pcv', 'wc', 'rc', 'htn', 'dm',
-                    'cad', 'appet', 'pe', 'ane']
+            'pcc', 'ba', 'bgr', 'bu', 'sc', 'sod', 'pot',
+            'hemo', 'pcv', 'wbcc', 'rbcc', 'htn', 'dm',
+            'cad', 'appet', 'pe', 'ane']
+                    
         input_data = [float(data[f]) for f in features]
+        print(f"Input data: {input_data}")  # ✅ Add this
+        
         input_df = pd.DataFrame([input_data], columns=features)
         input_scaled = kidney_scaler.transform(input_df)
+
         prediction = kidney_model.predict(input_scaled)
         probability = kidney_model.predict_proba(input_scaled)[0][1] * 100
+
         result = "Positive for Kidney Disease" if prediction[0] == 1 else "Negative for Kidney Disease"
+
         return jsonify({
             'success': True,
             'prediction': result,
             'probability': f"{probability:.2f}%",
             'is_positive': bool(prediction[0] == 1)
         })
+
     except Exception as e:
+        print(f"❌ Kidney prediction error: {e}")  # ✅ Add this
+        import traceback
+        traceback.print_exc()  # ✅ Add this
         return jsonify({'error': str(e), 'success': False}), 500
 
 # ============ BREAST CANCER PREDICTION ============
@@ -154,6 +183,38 @@ def predict_cancer():
         })
     except Exception as e:
         return jsonify({'error': str(e), 'success': False}), 500
+    
+
+# ============ PNEUMONIA PREDICTION ============
+@app.route('/predict/pneumonia', methods=['POST'])
+def predict_pneumonia():
+    if interpreter is None:
+        return jsonify({'error': 'Pneumonia model not loaded'}), 500
+    try:
+        data = request.json
+        image_data = base64.b64decode(data['image'])
+        image = Image.open(io.BytesIO(image_data)).convert('RGB')
+        image = image.resize((150, 150))
+        img_array = np.array(image, dtype=np.float32) / 255.0
+        img_array = np.expand_dims(img_array, axis=0)
+
+        interpreter.set_tensor(input_details[0]['index'], img_array)
+        interpreter.invoke()
+        output = interpreter.get_tensor(output_details[0]['index'])
+        probability = float(output[0][0]) * 100
+        is_positive = probability > 50
+
+        result = "Pneumonia Detected" if is_positive else "Normal - No Pneumonia"
+
+        return jsonify({
+            'success': True,
+            'prediction': result,
+            'probability': f"{probability:.2f}%",
+            'is_positive': is_positive
+        })
+    except Exception as e:
+        return jsonify({'error': str(e), 'success': False}), 500
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5001, debug=True)

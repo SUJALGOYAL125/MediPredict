@@ -137,8 +137,8 @@ router.post('/kidney/predict', isAuth, async (req, res) => {
             pot: parseFloat(req.body.pot),
             hemo: parseFloat(req.body.hemo),
             pcv: parseFloat(req.body.pcv),
-            wc: parseFloat(req.body.wc),
-            rc: parseFloat(req.body.rc),
+            wbcc: parseFloat(req.body.wc),
+            rbcc: parseFloat(req.body.rc),
             htn: parseFloat(req.body.htn),
             dm: parseFloat(req.body.dm),
             cad: parseFloat(req.body.cad),
@@ -243,6 +243,52 @@ router.post('/cancer/predict', isAuth, async (req, res) => {
         res.render('cancer', {
             userName: req.session.userName,
             result: { error: 'Prediction failed. Make sure ML service is running.' }
+        });
+    }
+});
+
+
+// ============ PNEUMONIA ============
+router.get('/pneumonia', isAuth, (req, res) => {
+    res.render('pneumonia', { userName: req.session.userName, result: null });
+});
+
+router.post('/pneumonia/predict', isAuth, async (req, res) => {
+    try {
+        const { imageBase64 } = req.body;
+
+        const flaskResponse = await axios.post(`${FLASK_URL}/predict/pneumonia`,
+            { image: imageBase64 },
+            {
+                headers: { 'Content-Type': 'application/json' },
+                timeout: 30000
+            }
+        );
+
+        const { prediction, probability, is_positive } = flaskResponse.data;
+
+        await Prediction.create({
+            userId: req.session.userId,
+            disease: 'Pneumonia',
+            inputs: { imageProvided: true },
+            result: prediction,
+            probability: probability,
+            isDiabetic: is_positive
+        });
+
+        // ✅ Return JSON instead of render
+        res.json({
+            success: true,
+            prediction,
+            probability,
+            is_positive
+        });
+
+    } catch (error) {
+        console.error('Pneumonia error:', error.message);
+        res.json({
+            success: false,
+            error: 'Prediction failed. Make sure ML service is running.'
         });
     }
 });
